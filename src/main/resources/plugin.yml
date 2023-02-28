@@ -1,0 +1,6 @@
+name: LagManager
+version: '${project.version}'
+main: net.toiletmc.lagmanager.LagManager
+api-version: 1.19
+authors: [ TheLitle_Yang ]
+website: https://toiletmc.net
