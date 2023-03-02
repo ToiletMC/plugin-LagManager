@@ -35,7 +35,7 @@ public class Observer {
     }
 
     public void warnIfLagging() {
-        if (getDoubleMspt() >= 50) {
+        if (getDoubleMspt() >= 150) {
             broadcastMessage();
         }
     }
