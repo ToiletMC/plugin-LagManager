@@ -24,17 +24,30 @@ public class CommandLagManager implements CommandExecutor {
         String mspt = String.format("%.1f", doubleMspt);
         plugin.getObserver().warnIfLagging();
 
-        if (args.length > 0) {
-            if (args[0].equalsIgnoreCase("test")) {
-                plugin.getObserver().warnWithoutLagging();
-            }
+        if (!sender.hasPermission("lagmanager.admin")) {
+            sender.sendMessage(ChatColor.RED + "未知的指令");
+            return true;
         }
 
-        if (doubleMspt <= 100) {
-            sender.sendMessage("MSPT：" + mspt + "，服务器现在很健康 " + ChatColor.GREEN + ":)");
-        } else {
-            sender.sendMessage("MSPT：" + mspt + "，服务器不是很健康 " + ChatColor.RED + ":(");
-
+        if (args.length > 0) {
+            switch (args[0].toLowerCase()) {
+                case "test":
+                    plugin.getObserver().warnIfLagging();
+                    break;
+                case "force":
+                    plugin.getObserver().warnWithoutLagging();
+                    break;
+                case "debug":
+                    if (doubleMspt <= 100) {
+                        sender.sendMessage("MSPT：" + mspt + "，服务器现在很健康 " + ChatColor.GREEN + ":)");
+                    } else {
+                        sender.sendMessage("MSPT：" + mspt + "，服务器不是很健康 " + ChatColor.RED + ":(");
+                    }
+                    break;
+                default:
+                    sender.sendMessage(ChatColor.RED + "未知的指令");
+                    break;
+            }
         }
 
         return true;

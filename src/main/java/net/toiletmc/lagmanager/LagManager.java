@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.annotation.plugin.author.Authors;
 
 import java.util.logging.Logger;
 
-@Plugin(name = "LagManager", version = "1.1.1")
+@Plugin(name = "LagManager", version = "1.1.2")
 @Dependency("spark")
 @ApiVersion(ApiVersion.Target.v1_19)
 @Authors(@Author("TheLittle_Yang"))
@@ -48,7 +48,7 @@ public final class LagManager extends JavaPlugin {
         getCommand("lagmanager").setExecutor(new CommandLagManager(this));
 
         getServer().getScheduler().runTaskTimer(this, () -> {
-            observer.warnIfLagging();
+            observer.warnLimitedIfLagging();
         }, 20L * 30L, 20L * 30L);
 
         Logger().info("正在监控服务器，如果服务器变卡我会通知玩家 :)");

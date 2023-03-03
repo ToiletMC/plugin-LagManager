@@ -42,21 +42,26 @@ public class Observer {
         broadcastMessage();
     }
 
-    private void broadcastMessage() {
-        if (broTimes == 0) {
-            ((Audience) Bukkit.getServer()).sendMessage(plugin.getHexToiletMC()
-                    .append(Component.text("当前服务器负载较高，请勿在大型刷怪塔或粘液基地久留。\n详情：")
-                            .color(plugin.textColor()))
-                    .append(Component.text("https://toiletmc.net/help/start/rules")
-                            .clickEvent(ClickEvent.openUrl("https://toiletmc.net/help/start/rules"))
-                            .color(plugin.textColor())
-                            .decorate(TextDecoration.UNDERLINED)));
+    public void warnLimitedIfLagging() {
+        if (broTimes != 0) {
+            broTimes = broTimes >= 15 ? 0 : broTimes + 1;
+            return;
         }
 
-        if (broTimes >= 15) {
-            broTimes = 0;
-        } else {
+        if (getDoubleMspt() >= 150) {
+            broadcastMessage();
             broTimes++;
         }
+    }
+
+    private void broadcastMessage() {
+        ((Audience) Bukkit.getServer()).sendMessage(plugin.getHexToiletMC()
+                .append(Component.text("当前服务器负载较高，请勿在大型刷怪塔或粘液基地久留。\n详情：")
+                        .color(plugin.textColor()))
+                .append(Component.text("https://toiletmc.net/help/start/rules")
+                        .clickEvent(ClickEvent.openUrl("https://toiletmc.net/help/start/rules"))
+                        .color(plugin.textColor())
+                        .decorate(TextDecoration.UNDERLINED)));
+
     }
 }
