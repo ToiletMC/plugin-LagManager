@@ -9,6 +9,6 @@
 
 ### 📖 使用教程
 
-命令-执行一次检测：/lagmanager test
-命令-发送强制提醒：/lagmanager force
+命令-执行一次检测：/lagmanager test  
+命令-发送强制提醒：/lagmanager force  
 命令-显示debug信息：/lagmanager debug
