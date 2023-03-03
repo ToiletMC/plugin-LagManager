@@ -36,4 +36,4 @@ jobs:
         prerelease: false
         title: "LagManager ${{ env.RELEASE_VERSION }}"
         files: |
-          LagManager-*.jar
+          target/LagManager-*.jar
