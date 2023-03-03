@@ -18,7 +18,7 @@ public class Observer {
 
     private void refresh() {
         GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick> msptInfo = spark.mspt();
-        DoubleAverageInfo msptLastMin = msptInfo.poll(StatisticWindow.MillisPerTick.MINUTES_1);
+        DoubleAverageInfo msptLastMin = msptInfo.poll(StatisticWindow.MillisPerTick.SECONDS_10);
         this.doubleMspt = msptLastMin.max();
     }
 
