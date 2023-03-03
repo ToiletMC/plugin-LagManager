@@ -9,5 +9,5 @@
 
 ### 📖 使用教程
 
-命令-执行一次检测：/lagmanager
+命令-执行一次检测：/lagmanager  
 命令-发送强制提醒：/lagmanager test
