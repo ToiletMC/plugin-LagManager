@@ -11,13 +11,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.annotation.dependency.Dependency;
 import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
+import org.bukkit.plugin.java.annotation.plugin.Website;
+import org.bukkit.plugin.java.annotation.plugin.author.Author;
+import org.bukkit.plugin.java.annotation.plugin.author.Authors;
 
 import java.util.logging.Logger;
 
-@Plugin(name = "LagManager", version = "1.0")
+@Plugin(name = "LagManager", version = "1.1")
 @Dependency("spark")
 @ApiVersion(ApiVersion.Target.v1_19)
-
+@Authors(@Author("TheLittle_Yang"))
+@Website("https://toiletmc.net")
 public final class LagManager extends JavaPlugin {
     private final TextColor textColor = TextColor.fromCSSHexString("#9fdd8c");
     private static Observer observer;
@@ -29,12 +33,13 @@ public final class LagManager extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // load spark
+        // 挂钩 spark
         RegisteredServiceProvider<Spark> provider = Bukkit.getServicesManager().getRegistration(Spark.class);
         if (provider != null) {
             spark = provider.getProvider();
+            getLogger().info("已挂钩到 spark");
         } else {
-            getLogger().severe("Failed to get Spark service");
+            getLogger().severe("spark 服务异常，已停用插件");
             Bukkit.getPluginManager().disablePlugin(this);
         }
 
@@ -45,12 +50,13 @@ public final class LagManager extends JavaPlugin {
         getServer().getScheduler().runTaskTimer(this, () -> {
             observer.warnIfLagging();
         }, 20L * 30L, 20L * 30L);
+
         Logger().info("正在监控服务器，如果服务器变卡我会通知玩家 :)");
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 
     public static LagManager getInstance() {

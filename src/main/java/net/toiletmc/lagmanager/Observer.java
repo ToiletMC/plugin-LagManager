@@ -13,15 +13,13 @@ import org.bukkit.Bukkit;
 public class Observer {
     private final LagManager plugin;
     private final Spark spark;
-    private GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick> msptInfo;
-    private DoubleAverageInfo msptLastMin;
     private double doubleMspt;
     private int broTimes = 0;
 
     private void refresh() {
-        this.msptInfo = plugin.getSpark().mspt();
-        this.msptLastMin = msptInfo.poll(StatisticWindow.MillisPerTick.MINUTES_1);
-        this.doubleMspt = msptLastMin.mean();
+        GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick> msptInfo = spark.mspt();
+        DoubleAverageInfo msptLastMin = msptInfo.poll(StatisticWindow.MillisPerTick.MINUTES_1);
+        this.doubleMspt = msptLastMin.max();
     }
 
     public Observer(LagManager plugin) {
