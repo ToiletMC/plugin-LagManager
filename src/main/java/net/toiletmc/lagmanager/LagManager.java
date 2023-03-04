@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.toiletmc.lagmanager.commands.CommandLagManager;
+import net.toiletmc.lagmanager.listeners.PlayerJoin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +18,8 @@ import org.bukkit.plugin.java.annotation.plugin.author.Authors;
 
 import java.util.logging.Logger;
 
-@Plugin(name = "LagManager", version = "1.1.3")
+
+@Plugin(name = "LagManager", version = "1.1.4")
 @Dependency("spark")
 @ApiVersion(ApiVersion.Target.v1_19)
 @Authors(@Author("TheLittle_Yang"))
@@ -45,6 +47,7 @@ public final class LagManager extends JavaPlugin {
 
         observer = new Observer(this);
 
+        getServer().getPluginManager().registerEvents((new PlayerJoin(this)), this);
         getCommand("lagmanager").setExecutor(new CommandLagManager(this));
 
         getServer().getScheduler().runTaskTimer(this, () -> {
