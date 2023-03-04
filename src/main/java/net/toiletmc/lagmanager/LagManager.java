@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.annotation.plugin.author.Authors;
 
 import java.util.logging.Logger;
 
-@Plugin(name = "LagManager", version = "1.1.2")
+@Plugin(name = "LagManager", version = "1.1.3")
 @Dependency("spark")
 @ApiVersion(ApiVersion.Target.v1_19)
 @Authors(@Author("TheLittle_Yang"))

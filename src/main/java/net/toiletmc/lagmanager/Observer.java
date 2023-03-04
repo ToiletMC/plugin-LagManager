@@ -15,16 +15,15 @@ public class Observer {
     private final Spark spark;
     private double doubleMspt;
     private int broTimes = 0;
-
-    private void refresh() {
-        GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick> msptInfo = spark.mspt();
-        DoubleAverageInfo msptLastMin = msptInfo.poll(StatisticWindow.MillisPerTick.SECONDS_10);
-        this.doubleMspt = msptLastMin.max();
-    }
+    private boolean skip = false;
 
     public Observer(LagManager plugin) {
         this.plugin = plugin;
         this.spark = plugin.getSpark();
+    }
+
+    public void setSkip() {
+        this.skip = true;
     }
 
     public double getDoubleMspt() {
@@ -43,6 +42,11 @@ public class Observer {
     }
 
     public void warnLimitedIfLagging() {
+        if (skip) {
+            skip = false;
+            return;
+        }
+
         if (broTimes != 0) {
             broTimes = broTimes >= 15 ? 0 : broTimes + 1;
             return;
@@ -52,6 +56,12 @@ public class Observer {
             broadcastMessage();
             broTimes++;
         }
+    }
+
+    private void refresh() {
+        GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick> msptInfo = spark.mspt();
+        DoubleAverageInfo msptLastMin = msptInfo.poll(StatisticWindow.MillisPerTick.SECONDS_10);
+        this.doubleMspt = msptLastMin.max();
     }
 
     private void broadcastMessage() {
