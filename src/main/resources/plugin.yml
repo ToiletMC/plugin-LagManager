@@ -4,3 +4,10 @@ main: net.toiletmc.lagmanager.LagManager
 api-version: 1.19
 authors: [ TheLitle_Yang ]
 website: https://toiletmc.net
+depend:
+  - spark
+commands:
+  lagmanager:
+    aliases: lm
+    permission: lagmanager.command.admin
+permissions: {}

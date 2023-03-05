@@ -5,12 +5,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.java.annotation.command.Commands;
-import org.bukkit.plugin.java.annotation.permission.Permission;
+import org.jetbrains.annotations.NotNull;
 
-@Commands(@org.bukkit.plugin.java.annotation.command.Command(name = "lagmanager", aliases = {"lm"}, permission = "lagmanager.command.admin"))
-@Permission(name = "lagmanager.command.admin", defaultValue = PermissionDefault.OP)
 public class CommandLagManager implements CommandExecutor {
     private final LagManager plugin;
 
@@ -19,10 +15,7 @@ public class CommandLagManager implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        double doubleMspt = plugin.getObserver().getDoubleMspt();
-        String mspt = String.format("%.1f", doubleMspt);
-        plugin.getObserver().warnIfLagging();
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
         if (!sender.hasPermission("lagmanager.admin")) {
             sender.sendMessage(ChatColor.RED + "未知的指令");
@@ -31,22 +24,17 @@ public class CommandLagManager implements CommandExecutor {
 
         if (args.length > 0) {
             switch (args[0].toLowerCase()) {
-                case "test":
-                    plugin.getObserver().warnIfLagging();
-                    break;
-                case "force":
-                    plugin.getObserver().warnWithoutLagging();
-                    break;
-                case "debug":
-                    if (doubleMspt <= 100) {
-                        sender.sendMessage("MSPT：" + mspt + "，服务器现在很健康 " + ChatColor.GREEN + ":)");
-                    } else {
-                        sender.sendMessage("MSPT：" + mspt + "，服务器不是很健康 " + ChatColor.RED + ":(");
-                    }
-                    break;
-                default:
-                    sender.sendMessage(ChatColor.RED + "未知的指令");
-                    break;
+                case "test" -> plugin.getMSPTCheckTask().warnIfLagging();
+                case "force" -> plugin.getMSPTCheckTask().warnWithoutLagging();
+                case "reload" -> {
+                    plugin.reloadConfig();
+                    plugin.getMSPTCheckTask().setMaxMSPT(plugin.getConfig().getInt("max_mspt"));
+                }
+                case "debug" -> {
+                    sender.sendMessage("当前mspt：" + plugin.getMSPTCheckTask().getDoubleMspt());
+                    sender.sendMessage("最大mspt：" + plugin.getMSPTCheckTask().getMaxMSPT());
+                }
+                default -> sender.sendMessage(ChatColor.RED + "未知的指令");
             }
         }
 

@@ -1,0 +1,3 @@
+max_mspt: 150
+message:
+  lag_broadcast: "<gradient:#02a4d3:#007ec7> ToiletMC »</gradient> <#9fdd8c>当前服务器负载较高，请勿在大型刷怪塔或粘液基地久留。\n详情：<click:open_url:https://toiletmc.net/help/start/rules><hover:show_text:'点击打开链接'>https://toiletmc.net/help/start/rules"

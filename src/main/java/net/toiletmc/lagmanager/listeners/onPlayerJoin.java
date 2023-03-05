@@ -5,15 +5,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerJoin implements Listener {
-    private LagManager plugin;
+public class onPlayerJoin implements Listener {
+    private final LagManager plugin;
 
-    public PlayerJoin(LagManager plugin) {
+    public onPlayerJoin(LagManager plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
     public void onLogin(PlayerJoinEvent event) {
-        plugin.getObserver().setSkip();
+        plugin.getMSPTCheckTask().setSkip();
     }
 }
