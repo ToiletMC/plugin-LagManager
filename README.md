@@ -5,7 +5,7 @@
 ### 📐 工作原理
 
 通过挂钩 Spark，获取服务器最近一分钟的最大 mspt。
-每30秒检测一次，当提醒过一次之后，7.5 分钟内都不会再提醒。
+每 30 秒检测一次，当提醒过一次之后，7.5 分钟内都不会再提醒。
 
 ### 📖 使用教程
 
@@ -15,4 +15,5 @@
 
 执行一次检测：/lagmanager test  
 发送强制提醒：/lagmanager force  
-显示debug信息：/lagmanager debug
+显示debug信息：/lagmanager debug  
+重载插件：/lm reload
