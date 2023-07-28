@@ -29,6 +29,7 @@ public class CommandLagManager implements CommandExecutor {
                 case "reload" -> {
                     plugin.reloadConfig();
                     plugin.getMSPTCheckTask().setMaxMSPT(plugin.getConfig().getInt("max_mspt"));
+                    sender.sendMessage("插件已重载！");
                 }
                 case "debug" -> {
                     sender.sendMessage("当前mspt：" + plugin.getMSPTCheckTask().getDoubleMspt());

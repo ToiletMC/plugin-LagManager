@@ -74,7 +74,7 @@ public class MSPTCheckTask implements Runnable {
 
     private void broadcastMessage() {
         String message = plugin.getConfig().getString("message.lag_broadcast").replaceAll(
-                "%mspt%", String.valueOf(spark.mspt().poll(StatisticWindow.MillisPerTick.MINUTES_1).max()));
+                "%mspt%", String.valueOf((int)spark.mspt().poll(StatisticWindow.MillisPerTick.MINUTES_1).max()));
         Bukkit.getServer().sendMessage(MiniMessage.miniMessage().deserialize(message));
 
     }
