@@ -69,12 +69,12 @@ public class MSPTCheckTask implements Runnable {
     private void refresh() {
         GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick> msptInfo = spark.mspt();
         DoubleAverageInfo msptLastMin = msptInfo.poll(StatisticWindow.MillisPerTick.MINUTES_1);
-        this.doubleMspt = msptLastMin.max();
+        this.doubleMspt = msptLastMin.percentile95th();
     }
 
     private void broadcastMessage() {
         String message = plugin.getConfig().getString("message.lag_broadcast").replaceAll(
-                "%mspt%", String.valueOf((int)spark.mspt().poll(StatisticWindow.MillisPerTick.MINUTES_1).max()));
+                "%mspt%", String.valueOf((int)spark.mspt().poll(StatisticWindow.MillisPerTick.MINUTES_1).percentile95th()));
         Bukkit.getServer().sendMessage(MiniMessage.miniMessage().deserialize(message));
 
     }
